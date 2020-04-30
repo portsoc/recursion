@@ -1,11 +1,17 @@
-document.addEventListener('keydown', nextStep);
+/*
+ * Recursive solution to the Tower of Hanoi problem.
+ */
+
+import { stepDelayKey as stepDelay } from './delays.js';
 
 async function moveBlocks(n, from, to, through) {
   if (n < 1) return; // nothing to do
 
+  // if only moving one block, just move it
   if (n === 1) {
+    // first report we'll move the block and wait a bit
     console.log(`will move a block from ${getName(from)} to ${getName(to)}`);
-    await stepDelayKey();
+    await stepDelay(el.status);
 
     // actually move the first block
     const block = from.querySelector('.block');
@@ -13,15 +19,14 @@ async function moveBlocks(n, from, to, through) {
     return;
   }
 
-  // we have more than one block to move, can't do it in a single step
+  // we have more than one block to move, can't do it in a single step,
+  // so we will do it as three steps:
+  // 1. move all but one blocks out of the way to the "through" tower,
+  // 2. move the last block to the "to" tower,
+  // 3. move the rest of the blocks back from "through" to "to".
 
-  // move all but one blocks out of the way to the "through" tower
   await moveBlocks(n - 1, from, through, to);
-
-  // move last block to the "to" tower
   await moveBlocks(1, from, to, through);
-
-  // move the rest of the blocks back from "through" to "to"
   await moveBlocks(n - 1, through, to, from);
 }
 
@@ -47,40 +52,3 @@ async function main() {
 }
 
 window.addEventListener('load', main);
-
-
-/**
- * Advanced code
- *
- * stepDelayKey() returns a promise that's resolved on the next key press.
- *
- * stepDelayTimeout() resolves after the given number
- * of milliseconds (default 100).
- *
- * stepDelayAnimationFrame() resolves on the next animation frame.
- */
-
-let pendingResolve = null;
-
-function nextStep(e) {
-  if (e.key === ' ' && pendingResolve) {
-    const toResolve = pendingResolve;
-    pendingResolve = null;
-    toResolve();
-  }
-}
-
-function stepDelayKey() { // eslint-disable-line no-unused-vars
-  el.status.textContent = 'Press space to move the next block.';
-  return new Promise(resolve => { pendingResolve = resolve; });
-}
-
-function stepDelayTimeout(ms = 100) { // eslint-disable-line no-unused-vars
-  el.status.textContent = `Moving at ${ms}ms per step.`;
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-function stepDelayAnimationFrame() { // eslint-disable-line no-unused-vars
-  el.status.textContent = 'Moving at every animation frame.';
-  return new Promise(resolve => requestAnimationFrame(resolve));
-}
