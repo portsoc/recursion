@@ -11,7 +11,7 @@ async function moveBlocks(n, from, to, through) {
   if (n === 1) {
     // first report we'll move the block and wait a bit
     console.log(`will move a block from ${getName(from)} to ${getName(to)}`);
-    await stepDelay(el.status);
+    await stepDelay();
 
     // actually move the first block
     const block = from.querySelector('.block');
@@ -38,17 +38,14 @@ function getName(el) {
 }
 
 
-const el = { /* will contain element handles */ };
-
 async function main() {
-  el.status = document.querySelector('#status');
-
   const towers = document.querySelectorAll('.tower');
   const n = towers[0].querySelectorAll('.block').length;
 
   await moveBlocks(n, towers[0], towers[1], towers[2]);
 
-  el.status.textContent = 'All done, thanks for playing. Reload to restart.';
+  const status = document.querySelector('#status');
+  status.textContent = 'All done, thanks for playing. Reload to restart.';
 }
 
 window.addEventListener('load', main);

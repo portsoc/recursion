@@ -3,7 +3,7 @@
  *
  * stepDelayKey() returns a promise that's resolved on the next key press.
  *
- * stepDelayTimeout() resolves after the given number
+ * stepDelayTimeout(ms) resolves after the given number
  * of milliseconds (default 100).
  *
  * stepDelayAnimationFrame() resolves on the next animation frame.
