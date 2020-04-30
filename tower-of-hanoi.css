@@ -4,7 +4,7 @@ html {
 }
 
 main {
-  background: #ddd;
+  background: #def;
   border: thin solid black;
   display: flex;
   flex-direction: row;
@@ -38,12 +38,12 @@ main {
 }
 
 .block[data-size='1']  { width:  10%; background-color: hsl(  0deg, 50%, 40%); }
-.block[data-size='2']  { width:  20%; background-color: hsl( 20deg, 50%, 40%); }
-.block[data-size='3']  { width:  30%; background-color: hsl( 40deg, 50%, 40%); }
-.block[data-size='4']  { width:  40%; background-color: hsl( 60deg, 50%, 40%); }
-.block[data-size='5']  { width:  50%; background-color: hsl( 80deg, 50%, 40%); }
-.block[data-size='6']  { width:  60%; background-color: hsl(100deg, 50%, 40%); }
-.block[data-size='7']  { width:  70%; background-color: hsl(120deg, 50%, 40%); }
-.block[data-size='8']  { width:  80%; background-color: hsl(140deg, 50%, 40%); }
-.block[data-size='9']  { width:  90%; background-color: hsl(160deg, 50%, 40%); }
-.block[data-size='10'] { width: 100%; background-color: hsl(180deg, 50%, 40%); }
+.block[data-size='2']  { width:  20%; background-color: hsl( 30deg, 50%, 40%); }
+.block[data-size='3']  { width:  30%; background-color: hsl( 60deg, 50%, 40%); }
+.block[data-size='4']  { width:  40%; background-color: hsl( 90deg, 50%, 40%); }
+.block[data-size='5']  { width:  50%; background-color: hsl(120deg, 50%, 40%); }
+.block[data-size='6']  { width:  60%; background-color: hsl(150deg, 50%, 40%); }
+.block[data-size='7']  { width:  70%; background-color: hsl(180deg, 50%, 40%); }
+.block[data-size='8']  { width:  80%; background-color: hsl(210deg, 50%, 40%); }
+.block[data-size='9']  { width:  90%; background-color: hsl(240deg, 50%, 40%); }
+.block[data-size='10'] { width: 100%; background-color: hsl(270deg, 50%, 40%); }
