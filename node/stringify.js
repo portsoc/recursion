@@ -67,6 +67,7 @@ console.log(JSON.stringify(complexObj));
 // missing functionality:
 // - undefined
 // - NaN
+// - true and false
 // - strings and keys that contain double quotes
 // - sparse arrays
 // - pretty-printing
