@@ -36,9 +36,9 @@ function initTurtleCanvas() {
   c.el.height = c.el.scrollHeight * window.devicePixelRatio;
 
   // transform canvas coordinates so that the shorter side is 200 wide,
-  // and y goes up from the bottom
+  // coordinates start in the centre, and y goes up
   c.s = Math.min(c.el.width, c.el.height) / 200;
-  c.ctx.translate(0, c.el.height);
+  c.ctx.translate(c.el.width / 2, c.el.height / 2);
   c.ctx.scale(c.s, -c.s);
 
   c.w = Math.ceil(c.el.width / c.s);
@@ -49,8 +49,8 @@ function initTurtleCanvas() {
 }
 
 export function reset() {
-  t.x = c.w / 2;
-  t.y = c.h / 2;
+  t.x = 0;
+  t.y = 0;
   t.heading = 0;
   t.penDown = true;
 
@@ -95,7 +95,9 @@ export function turnRight(deg) {
 }
 
 export function clear() {
-  c.ctx.clearRect(0, 0, c.w, c.h);
+  const ww = Math.ceil(c.w / 2); // half width
+  const hh = Math.ceil(c.h / 2); // half height
+  c.ctx.clearRect(-ww, -hh, ww * 2, hh * 2);
 }
 
 export function setColor(col) {
@@ -104,11 +106,11 @@ export function setColor(col) {
 }
 
 export function setX(x) {
-  t.x = x + c.w / 2;
+  t.x = x;
 }
 
 export function setY(y) {
-  t.y = y + c.h / 2;
+  t.y = y;
 }
 
 export function setLineWidth(w) {
