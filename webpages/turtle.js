@@ -12,17 +12,13 @@ async function main() {
   T.randomColor();
   T.forward(50);
 
-  await stepDelay();
-
   T.randomColor();
   T.turnRight(45);
   T.forward(30);
 
-  await stepDelay();
 
   // // draw a square
-  T.reset();
-  await square();
+  // await square();
 
 
   // // draw N rotating squares
