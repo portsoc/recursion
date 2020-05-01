@@ -9,20 +9,22 @@
  * stepDelayAnimationFrame() resolves on the next animation frame.
  */
 
-export function stepDelayTimeout(ms = 100) { // eslint-disable-line no-unused-vars
+export function stepDelayTimeout(ms = 100) {
   if (status) status.textContent = `Moving at ${ms}ms per step.`;
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export function stepDelayAnimationFrame() { // eslint-disable-line no-unused-vars
+export function stepDelayAnimationFrame() {
   if (status) status.textContent = 'Moving at every animation frame.';
   return new Promise(resolve => requestAnimationFrame(resolve));
 }
 
-export function stepDelayKey() { // eslint-disable-line no-unused-vars
-  if (status) status.textContent = 'Press space to move the next block.';
+export function stepDelayKey() {
+  if (status) status.textContent = 'Press space for the next step.';
   return new Promise(resolve => { pendingKeyResolve = resolve; });
 }
+
+export function stepNoDelay() { }
 
 let pendingKeyResolve = null;
 
