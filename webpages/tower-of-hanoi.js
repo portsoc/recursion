@@ -42,7 +42,7 @@ async function main() {
   const towers = document.querySelectorAll('.tower');
   const n = towers[0].querySelectorAll('.block').length;
 
-  await moveBlocks(n, towers[0], towers[1], towers[2]);
+  await moveBlocks(n, towers[0], towers[2], towers[1]);
 
   const status = document.querySelector('#status');
   status.textContent = 'All done, thanks for playing. Reload to restart.';
