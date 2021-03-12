@@ -48,14 +48,14 @@ function initTurtleCanvas() {
   c.setReady();
 }
 
-export function reset() {
-  t.x = 0;
-  t.y = 0;
-  t.heading = 0;
+export function reset(x=0, y=0, heading=0, color='#000', lineWidth=8) {
+  t.x = x;
+  t.y = y;
+  t.heading = heading;
   t.penDown = true;
 
-  setColor('#000');
-  setLineWidth(8);
+  setColor(color);
+  setLineWidth(lineWidth);
 
   c.ctx.lineCap = 'round';
 }
