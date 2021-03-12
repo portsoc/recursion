@@ -68,7 +68,7 @@ async function simpleTree(startLength = 20) { // eslint-disable-line no-unused-v
   T.forward(startLength);
   await stepDelay();
 
-  // if the three is big enough, draw branches
+  // if the tree is big enough, draw branches
   if (startLength > 8) {
     T.turnLeft(30);
     await simpleTree(startLength * 0.8);
@@ -87,7 +87,7 @@ async function tree(startLength = 20, left = 30, right = 35, scaling = 0.8, min 
   T.forward(startLength);
   await stepDelay();
 
-  // if the three is big enough, draw branches
+  // if the tree is big enough, draw branches
   if (startLength > min) {
     T.turnLeft(left);
     await tree(startLength * scaling, left, right, scaling, min);
