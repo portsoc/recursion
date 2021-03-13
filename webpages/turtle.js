@@ -7,14 +7,19 @@ import * as T from './turtle-lib.js';
 
 async function main() {
   await T.ready();
+
   T.show();
+  await stepDelay();
+
 
   // draw two lines
   T.randomColor();
   T.forward(50);
+  await stepDelay();
 
   T.randomColor();
   T.turnRight(45);
+  await stepDelay();
   T.forward(30);
 
 
@@ -33,20 +38,24 @@ async function main() {
 
   // // simple tree
   // T.setY(-60);
+  // await stepDelay();
   // await simpleTree();
 
 
   // // several parametric trees
   // T.setY(-60);
   // T.setX(0);
+  // await stepDelay();
   // T.randomColor();
   // await tree(40, 40, 35, 0.75, 8);
   //
   // T.setX(-40);
+  // await stepDelay();
   // T.randomColor();
   // await tree(30, 30, 35, 0.75, 8);
   //
   // T.setX(40);
+  // await stepDelay();
   // T.randomColor();
   // await tree(30, 30, 50, 0.7, 4);
 
@@ -75,14 +84,18 @@ async function simpleTree(startLength = 20) { // eslint-disable-line no-unused-v
   // if the tree is big enough, draw branches
   if (startLength > 8) {
     T.turnLeft(30);
+    await stepDelay();
     await simpleTree(startLength * 0.8);
     T.turnRight(65);
+    await stepDelay();
     await simpleTree(startLength * 0.8);
     T.turnLeft(35);
+    await stepDelay();
   }
 
   // go back down the stem
   T.back(startLength);
+  await stepDelay();
 }
 
 
