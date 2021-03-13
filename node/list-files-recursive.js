@@ -1,7 +1,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-async function listDirectoryContents(dir = '.', prefix = '') {
+async function listFiles(dir) {
   // get an array of files in the given directory
   const files = await fs.readdir(dir, {
     withFileTypes: true,
@@ -9,14 +9,19 @@ async function listDirectoryContents(dir = '.', prefix = '') {
 
   // list each file's name, with extra '/' for directories
   for (const file of files) {
-    console.log(`${prefix}${file.name}${fileTypeSymbol(file)}`);
+    console.log(`${file.name}${fileTypeSymbol(file)}`);
 
     // also list the contents of the directory
     if (file.isDirectory()) {
       const subdir = path.join(dir, file.name);
-      const deeperPrefix = prefix + ' | ';
 
-      await listDirectoryContents(subdir, deeperPrefix);
+      // indent the files in the subfolder
+      console.group();
+
+      await listFiles(subdir);
+
+      // remove the indent
+      console.groupEnd();
     }
   }
 }
@@ -28,4 +33,4 @@ function fileTypeSymbol(file) {
   return '';
 }
 
-listDirectoryContents();
+listFiles('.');

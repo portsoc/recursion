@@ -1,6 +1,6 @@
 const fs = require('fs').promises;
 
-async function listDirectoryContents(dir = '.') {
+async function listFiles(dir) {
   // get an array of files in the given directory
   const files = await fs.readdir(dir, {
     withFileTypes: true,
@@ -19,4 +19,4 @@ function fileTypeSymbol(file) {
   return '';
 }
 
-listDirectoryContents();
+listFiles('.');
