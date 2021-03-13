@@ -31,10 +31,12 @@ async function main() {
 
 
   // // simple tree
+  // T.setY(-60);
   // await simpleTree();
 
 
   // // several parametric trees
+  // T.setY(-60);
   // T.setX(0);
   // T.randomColor();
   // await tree(40, 40, 35, 0.75, 8);
