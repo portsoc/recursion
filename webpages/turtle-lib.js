@@ -48,7 +48,7 @@ function initTurtleCanvas() {
   c.setReady();
 }
 
-export function reset(x=0, y=0, heading=0, color='#000', lineWidth=8) {
+export function reset(x = 0, y = 0, heading = 0, color = '#000', lineWidth = 8) {
   t.x = x;
   t.y = y;
   t.heading = heading;
