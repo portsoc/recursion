@@ -8,6 +8,7 @@ const t = {
   penDown: true,
   color: '#000',
   lineWidth: 2,
+  showingTurtle: false,
 };
 
 // canvas info
@@ -45,10 +46,13 @@ function initTurtleCanvas() {
   c.h = Math.ceil(c.el.height / c.s);
 
   reset();
-  c.setReady();
+
+  loadTurtleLogo();
 }
 
 export function reset(x = 0, y = 0, heading = 0, color = '#000', lineWidth = 8) {
+  hideTurtle();
+
   t.x = x;
   t.y = y;
   t.heading = heading;
@@ -58,6 +62,8 @@ export function reset(x = 0, y = 0, heading = 0, color = '#000', lineWidth = 8) 
   setLineWidth(lineWidth);
 
   c.ctx.lineCap = 'round';
+
+  showTurtle();
 }
 
 export function penDown() {
@@ -71,6 +77,8 @@ export function penUp() {
 // todo add wrapping of canvas so if the turtle
 // leaves to the right it emerges from the left
 export function forward(l) {
+  hideTurtle();
+
   const dx = -l * Math.sin(rad(t.heading));
   const dy = l * Math.cos(rad(t.heading));
 
@@ -80,6 +88,8 @@ export function forward(l) {
 
   t.x += dx;
   t.y += dy;
+
+  showTurtle();
 }
 
 export function back(l) {
@@ -87,7 +97,9 @@ export function back(l) {
 }
 
 export function turnLeft(deg) {
+  hideTurtle();
   t.heading += deg;
+  showTurtle();
 }
 
 export function turnRight(deg) {
@@ -95,9 +107,11 @@ export function turnRight(deg) {
 }
 
 export function clear() {
+  hideTurtle();
   const ww = Math.ceil(c.w / 2); // half width
   const hh = Math.ceil(c.h / 2); // half height
   c.ctx.clearRect(-ww, -hh, ww * 2, hh * 2);
+  showTurtle();
 }
 
 export function setColor(col) {
@@ -106,11 +120,15 @@ export function setColor(col) {
 }
 
 export function setX(x) {
+  hideTurtle();
   t.x = x;
+  showTurtle();
 }
 
 export function setY(y) {
+  hideTurtle();
   t.y = y;
+  showTurtle();
 }
 
 export function setLineWidth(w) {
@@ -127,6 +145,17 @@ function nextColor() {
   const retval = colors.pop();
   colors.unshift(retval);
   return retval;
+}
+
+export function show() {
+  hideTurtle();
+  t.showingTurtle = true;
+  showTurtle();
+}
+
+export function hide() {
+  hideTurtle();
+  t.showingTurtle = false;
 }
 
 
@@ -153,4 +182,47 @@ function line(x1, y1, x2, y2) {
   c.ctx.moveTo(x1, y1);
   c.ctx.lineTo(x2, y2);
   c.ctx.stroke();
+}
+
+let savedCanvasImage = null;
+let turtleImage = null;
+
+function loadTurtleLogo() {
+  const img = new Image();
+  img.src = 'turtle.png';
+  img.addEventListener('load', () => {
+    turtleImage = img;
+    c.setReady();
+  });
+  img.addEventListener('error', () => {
+    console.error('could not load turtle image', img.src);
+  });
+
+  return img;
+}
+
+function hideTurtle() {
+  if (savedCanvasImage) {
+    c.ctx.putImageData(savedCanvasImage, 0, 0);
+    savedCanvasImage = null;
+  }
+}
+
+function showTurtle() {
+  if (!t.showingTurtle) return;
+  if (savedCanvasImage) {
+    throw new Error("showing turtle when it's already shown!");
+  }
+
+  if (turtleImage) {
+    savedCanvasImage = c.ctx.getImageData(0, 0, c.el.width, c.el.height);
+
+    const w = 10;
+    const h = w / turtleImage.naturalWidth * turtleImage.naturalHeight;
+    c.ctx.save();
+    c.ctx.translate(t.x, t.y);
+    c.ctx.rotate(rad(180 + t.heading));
+    c.ctx.drawImage(turtleImage, -w / 2, -h / 2, w, h);
+    c.ctx.restore();
+  }
 }

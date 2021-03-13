@@ -7,6 +7,7 @@ import * as T from './turtle-lib.js';
 
 async function main() {
   await T.ready();
+  T.show();
 
   // draw two lines
   T.randomColor();
@@ -59,6 +60,7 @@ async function main() {
 async function square(size = 50) { // eslint-disable-line no-unused-vars
   for (let i = 0; i < 4; i += 1) {
     T.forward(size);
+    await stepDelay();
     T.turnRight(90);
     await stepDelay();
   }
