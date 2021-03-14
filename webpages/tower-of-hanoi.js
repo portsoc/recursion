@@ -9,7 +9,7 @@ async function moveBlocks(n, from, to, through) {
 
   // if only moving one block, just move it
   if (n === 1) {
-    // first report we'll move the block and wait a bit
+    // first report that we'll move the block and wait a bit
     console.log(`will move a block from ${getName(from)} to ${getName(to)}`);
     await stepDelay();
 
