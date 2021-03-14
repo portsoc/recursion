@@ -9,25 +9,28 @@ async function moveBlocks(n, from, to, spare) {
 
   // if only moving one block, just move it
   if (n === 1) {
-    // first report that we'll move the block and wait a bit
-    console.log(`will move a block from ${getName(from)} to ${getName(to)}`);
-    await stepDelay();
+    await moveBlock(from, to);
+  } else {
+    // we have more than one block to move, can't do it in a single step,
+    // so we will do it as three steps:
+    // 1. move all but one blocks out of the way to the "spare" tower,
+    // 2. move the last block to the "to" tower,
+    // 3. move the rest of the blocks back from "spare" to "to".
 
-    // actually move the first block
-    const block = from.querySelector('.block');
-    to.insertBefore(block, to.querySelector('.block'));
-    return;
+    await moveBlocks(n - 1, from, spare, to);
+    await moveBlocks(1, from, to, spare);
+    await moveBlocks(n - 1, spare, to, from);
   }
+}
 
-  // we have more than one block to move, can't do it in a single step,
-  // so we will do it as three steps:
-  // 1. move all but one blocks out of the way to the "spare" tower,
-  // 2. move the last block to the "to" tower,
-  // 3. move the rest of the blocks back from "spare" to "to".
+async function moveBlock(from, to) {
+  // first report that we'll move the block and wait a bit
+  console.log(`will move a block from ${getName(from)} to ${getName(to)}`);
+  await stepDelay();
 
-  await moveBlocks(n - 1, from, spare, to);
-  await moveBlocks(1, from, to, spare);
-  await moveBlocks(n - 1, spare, to, from);
+  // actually move the first block
+  const block = from.querySelector('.block');
+  to.insertBefore(block, to.querySelector('.block'));
 }
 
 function getName(el) {
