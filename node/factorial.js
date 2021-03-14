@@ -6,5 +6,5 @@ function factorial(n) {
   }
 }
 
-console.log(factorial(4));
-// shows 24 because that's 4*3*2*1
+console.log(factorial(7));
+// shows 5040 because that's 7*6*5*4*3*2*1
