@@ -4,20 +4,20 @@
 
 import { stepDelayKey as stepDelay } from './delays.js';
 
-async function moveBlocks(n, from, to, through) {
+async function moveBlocks(n, from, to, spare) {
   if (n % 2 === 0) {
     // for even numbers of disks, need to reverse the order
-    [to, through] = [through, to];
+    [to, spare] = [spare, to];
   }
 
   // simply do legal moves between pairs of towers:
-  // from&to, from&through, to&through, loop until done
+  // from&to, from&spare, to&spare, loop until done
   do {
     await moveBlockBetween(from, to);
 
     // rotate the towers: move the last to be the first
-    [from, to, through] = [through, from, to];
-  } while (!isDone(from, to, through));
+    [from, to, spare] = [spare, from, to];
+  } while (!isDone(from, to, spare));
 }
 
 // move block between towers t1 and t2, whichever way is a legal move
@@ -45,14 +45,14 @@ async function moveBlock(from, to) {
   to.insertBefore(block, to.querySelector('.block'));
 }
 
-function isDone(from, to, through) {
+function isDone(...towers) {
   // done when all the blocks are in just one element
-
   let nonEmptyCount = 0;
 
-  if (from.querySelectorAll('.block').length > 0) nonEmptyCount += 1;
-  if (to.querySelectorAll('.block').length > 0) nonEmptyCount += 1;
-  if (through.querySelectorAll('.block').length > 0) nonEmptyCount += 1;
+  for (const t of towers) {
+    if (t.querySelectorAll('.block').length > 0) nonEmptyCount += 1;
+  }
+  console.log(nonEmptyCount);
 
   return nonEmptyCount <= 1;
 }

@@ -4,7 +4,7 @@
 
 import { stepDelayKey as stepDelay } from './delays.js';
 
-async function moveBlocks(n, from, to, through) {
+async function moveBlocks(n, from, to, spare) {
   if (n < 1) return; // nothing to do
 
   // if only moving one block, just move it
@@ -21,13 +21,13 @@ async function moveBlocks(n, from, to, through) {
 
   // we have more than one block to move, can't do it in a single step,
   // so we will do it as three steps:
-  // 1. move all but one blocks out of the way to the "through" tower,
+  // 1. move all but one blocks out of the way to the "spare" tower,
   // 2. move the last block to the "to" tower,
-  // 3. move the rest of the blocks back from "through" to "to".
+  // 3. move the rest of the blocks back from "spare" to "to".
 
-  await moveBlocks(n - 1, from, through, to);
-  await moveBlocks(1, from, to, through);
-  await moveBlocks(n - 1, through, to, from);
+  await moveBlocks(n - 1, from, spare, to);
+  await moveBlocks(1, from, to, spare);
+  await moveBlocks(n - 1, spare, to, from);
 }
 
 function getName(el) {
