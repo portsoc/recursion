@@ -6,7 +6,7 @@ import { stepDelayKey as stepDelay } from './delays.js';
 
 async function moveBlocks(n, from, to, spare) {
   if (n % 2 === 0) {
-    // for even numbers of disks, need to reverse the order
+    // for even numbers of blocks, need to start on the spare
     [to, spare] = [spare, to];
   }
 
