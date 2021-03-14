@@ -5,6 +5,8 @@
 import { stepDelayKey as stepDelay } from './delays.js';
 
 async function moveBlocks(n, from, to, spare) {
+  if (n < 1) return; // nothing to do
+
   if (n % 2 === 0) {
     // for even numbers of blocks, need to start on the spare
     [to, spare] = [spare, to];
@@ -22,17 +24,20 @@ async function moveBlocks(n, from, to, spare) {
 
 // move block between towers t1 and t2, whichever way is a legal move
 async function moveBlockBetween(t1, t2) {
-  const block1 = t1.querySelector('.block');
-  const block2 = t2.querySelector('.block');
-
-  const size1 = Number(block1?.dataset.size ?? Infinity);
-  const size2 = Number(block2?.dataset.size ?? Infinity);
+  const size1 = Number(t1.querySelector('.block')?.dataset.size ?? Infinity);
+  const size2 = Number(t2.querySelector('.block')?.dataset.size ?? Infinity);
 
   if (size1 > size2) {
     await moveBlock(t2, t1);
   } else {
     await moveBlock(t1, t2);
   }
+}
+
+// done when all the blocks are in just one element
+function isDone(...towers) {
+  // check that the count of non-empty towers is 1
+  return towers.filter(t => t.querySelectorAll('.block').length > 0).length === 1;
 }
 
 async function moveBlock(from, to) {
@@ -43,18 +48,6 @@ async function moveBlock(from, to) {
   // actually move the first block
   const block = from.querySelector('.block');
   to.insertBefore(block, to.querySelector('.block'));
-}
-
-function isDone(...towers) {
-  // done when all the blocks are in just one element
-  let nonEmptyCount = 0;
-
-  for (const t of towers) {
-    if (t.querySelectorAll('.block').length > 0) nonEmptyCount += 1;
-  }
-  console.log(nonEmptyCount);
-
-  return nonEmptyCount <= 1;
 }
 
 function getName(el) {
