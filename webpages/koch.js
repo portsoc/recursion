@@ -86,15 +86,15 @@ async function kochKochLine(size) {
 }
 
 async function recursiveKochLine(size, breaks = 0) {
-  const s = size / 3;
-  if (breaks--) {
-    await recursiveKochLine(s, breaks);
+  if (breaks > 0) {
+    const s = size / 3;
+    await recursiveKochLine(s, breaks - 1);
     T.turnLeft(60);
-    await recursiveKochLine(s, breaks);
+    await recursiveKochLine(s, breaks - 1);
     T.turnRight(120);
-    await recursiveKochLine(s, breaks);
+    await recursiveKochLine(s, breaks - 1);
     T.turnLeft(60);
-    await recursiveKochLine(s, breaks);
+    await recursiveKochLine(s, breaks - 1);
   } else {
     await simpleLine(size);
   }
