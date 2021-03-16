@@ -18,7 +18,7 @@ async function moveBlocks(n, from, to, spare) {
     // 3. move the rest of the blocks back from "spare" to "to".
 
     await moveBlocks(n - 1, from, spare, to);
-    await moveBlocks(1, from, to, spare);
+    await moveBlock(from, to);
     await moveBlocks(n - 1, spare, to, from);
   }
 }
